@@ -7,7 +7,16 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "precommit": "lint-staged"
+  },
+ "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": "eslint --fix"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -22,6 +31,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "lint-staged": "^15.2.0",
     "postcss": "^8.4.32",
     "semantic-ui-ember": "github:Semantic-Org/Semantic-UI-Ember",
     "tailwindcss": "^3.3.6",
