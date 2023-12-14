@@ -1,11 +1,11 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import BgLogin from '../../assets/img/bg-login.svg';
 import { useForm } from 'react-hook-form';
 import useAuthStore from '../../setup/store/useAuthStore';
 import useLogin from './hook/useLogin';
 import { ROUTES } from '../../helper/constanta/routes';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../../components/Button';
+import './style.css';
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -24,6 +24,16 @@ const Login = () => {
 
     const redirectPath = location.state?.from || ROUTES.DASHBOARD;
 
+    const [isSignUpMode, setIsSignUpMode] = useState(false);
+
+    const handleSignUpClick = () => {
+        setIsSignUpMode(true);
+    };
+
+    const handleSignInClick = () => {
+        setIsSignUpMode(false);
+    };
+
     useEffect(() => {
         if (user) {
             navigate(redirectPath);
@@ -32,81 +42,87 @@ const Login = () => {
 
     if (user) return;
     return (
-        <div className="mx-auto max-h-[700px] max-w-7xl w-screen h-screen overflow-hidden">
-            <div className="grid grid-cols-12 w-full h-full">
-                <div className="hidden md:block md:col-span-5">
-                    <img
-                        src={BgLogin}
-                        alt="login bg"
-                        className="w-full h-full object-cover"
-                    />
-                </div>
-                <div className="col-span-12 md:col-span-7">
-                    <div className="px-20 py-12">
-                        <h1 className="text-xl uppercase font-bold">
-                            Tirto Kauripan
-                        </h1>
-                        <div className="mt-20">
-                            <h2 className="text-3xl font-semibold tracking-widest">
-                                USER LOGIN
-                            </h2>
-                            <p className="mt-2 font-semibold">
-                                Welcome to the website
-                            </p>
+        <div className={`bg-blue-300 container ${isSignUpMode ? 'sign-up-mode' : ''}`} >
+            <div className="forms-container">
+                <div className="signin-signup">
+                    <form action="#" className="sign-in-form" onSubmit={handleSubmit(onSubmit)}>
+                        <h2 className="title">Sign in</h2>
+                        <div className="input-field">
+                            <i className="fas fa-user"></i>
+                            <input type="text" placeholder="Phone Number(628xxxxxx)" 
+                            {...register('phone', {
+                                required: true,
+                            })}
+                            />
                         </div>
-                        <form
-                            onSubmit={handleSubmit(onSubmit)}
-                            className="mt-8 max-w-[400px]"
-                        >
-                            <div className="relative z-0 mt-4">
-                                <input
-                                    type="text"
-                                    id="username"
-                                    className="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" "
-                                    {...register('phone', {
-                                        required: true,
-                                    })}
-                                />
-                                <label
-                                    htmlFor="username"
-                                    className="absolute text-base text-gray-500 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                                >
-                                    Username
-                                </label>
-                            </div>
-                            {errors.username && (
-                                <p className="text-red-500 text-sm">
-                                    Username is required
-                                </p>
-                            )}
-                            <div className="relative z-0 mt-4">
-                                <input
-                                    type="password"
-                                    id="password"
-                                    className="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" "
-                                    {...register('password', {
-                                        required: true,
-                                    })}
-                                />
-                                <label
-                                    htmlFor="password"
-                                    className="absolute text-base text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                                >
-                                    Password
-                                </label>
-                            </div>
-                            {errors.password && (
-                                <p className="text-red-500 text-sm">
-                                    Password is required
-                                </p>
-                            )}
-                            <Button type="submit" isloading={isLoading ? 1 : 0}>
-                                Login
-                            </Button>
-                        </form>
+                        {errors.phone && (
+                            <p className="text-red-800 text-sm">
+                                Phone Number is required
+                            </p>
+                        )}
+                        <div className="input-field">
+                            <i className="fas fa-lock"></i>
+                            <input type="password" placeholder="Password"
+                             {...register('password', {
+                                required: true,
+                            })} />
+                        </div>
+                        {errors.password && (
+                            <p className="text-red-800 text-sm">
+                                Password is required
+                            </p>
+                        )}
+                        <Button type="submit" isloading={isLoading ? 1 : 0}>
+                            Login
+                        </Button>
+                    </form>
+                    <form action="#" className="sign-up-form">
+                        <h2 className="title">Sign up</h2>
+                        <div className="input-field">
+                            <i className="fas fa-user"></i>
+                            <input type="text" placeholder="Username" />
+                        </div>
+                        <div className="input-field">
+                            <i className="fas fa-envelope"></i>
+                            <input type="email" placeholder="Email" />
+                        </div>
+                        <div className="input-field">
+                            <i className="fas fa-lock"></i>
+                            <input type="password" placeholder="Password" />
+                        </div>
+                        <Button type="submit" isloading={isLoading ? 1 : 0}>
+                            Sign up
+                        </Button>
+                    </form>
+                </div>
+            </div>
+
+            <div className="panels-container">
+                <div className="panel left-panel">
+                    <div className="content">
+                        <h3>New here ?</h3>
+                        <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
+                        ex ratione. Aliquid!
+                        </p>
+                        <button className="btn transparent" id="sign-up-btn" onClick={handleSignUpClick}>
+                        Sign up
+                        </button>
                     </div>
+                    <img src="img/log.svg" className="image" alt="" />
+                </div>
+                <div className="panel right-panel">
+                    <div className="content">
+                        <h3>One of us ?</h3>
+                        <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
+                        laboriosam ad deleniti.
+                        </p>
+                        <button className="btn transparent" id="sign-in-btn" onClick={handleSignInClick}>
+                        Sign in
+                        </button>
+                    </div>
+                    <img src="img/register.svg" className="image" alt="" />
                 </div>
             </div>
         </div>
