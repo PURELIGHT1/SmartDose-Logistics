@@ -1,12 +1,13 @@
-import useAuthStore from '../../../setup/store/useAuthStore';
-
 const Produk = () => {
     
-    const user = useAuthStore((state) => state.user);
-    console.log(user.role);
     return (
-        <div>
-            hi
+       <div className="grid">
+            <div className="col-12">
+                <div className="card">
+                    <h5>Empty Page</h5>
+                    <p>Use this page to start from scratch and place your custom content.</p>
+                </div>
+            </div>
         </div>
     );
 };

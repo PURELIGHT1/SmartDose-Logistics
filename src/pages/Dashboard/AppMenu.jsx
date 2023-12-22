@@ -1,43 +1,69 @@
-import AppMenuitem from './AppMenuitem';
-import { MenuProvider } from '../../context/menucontext';
-import { ROUTES } from '../../helper/constanta/routes';
-import { MdOutlineSpaceDashboard } from 'react-icons/md';
+import { Link, useLocation } from 'react-router-dom';
+import { AppMenuitem } from './AppMenuitem';
+import useAuthStore from '../../setup/store/useAuthStore';
+import DropdownMenu from './DropdownMenu';
+import { classNames } from 'primereact/utils';
 
 const AppMenu = () => {
-
-    const model = [
-        {
-            title: 'Main Menu',
-            links: [
-                {
-                    title: 'Dashboard',
-                    path: ROUTES.DASHBOARD,
-                    icon: MdOutlineSpaceDashboard,
-                    roles: ['ADMIN'],
-                },
-            ],
-        },
-        {
-            title: 'Master',
-            links: [
-                {
-                    title: 'Produk',
-                    path: ROUTES.PRODUK,
-                    icon: MdOutlineSpaceDashboard,
-                    roles: ['USER'],
-                },
-            ],
-        },
-    ];
-
+    const { pathname } = useLocation();
+    const user = useAuthStore((state) => state.user);
+    console.log(AppMenuitem);
     return (
-        <MenuProvider>
-            <ul className="layout-menu">
-                {model.map((item, i) => {
-                    return !item?.seperator ? <AppMenuitem item={item} root={true} index={i} key={item.title} /> : <li className="menu-separator"></li>;
+        
+            <div className="mt-4">
+                {AppMenuitem.map((link, index) => {
+                    return (
+                        <div
+                            className={`${index !== 0 ? 'mt-4' : ''}`}
+                            key={link.title}
+                        >
+                            {link.links.filter((item) => {
+                                return item.roles.includes(user?.role);
+                            }).length > 0 && (
+                                <h6 className="layout-menuitem-root-text font-bold uppercase">
+                                    {link.title}
+                                </h6>
+                            )}
+                            {link.links
+                                .filter((item) => {
+                                    return item.roles.includes(user?.role);
+                                })
+                                .map((link) => {
+                                    const isActive = pathname.startsWith(
+                                        link.path
+                                    );
+                                    if (link.dropdown) {
+                                        return (
+                                            <DropdownMenu
+                                                key={link.title}
+                                                pathname={pathname}
+                                                basepath={link.basepath}
+                                                icon={link.icon}
+                                                title={link.title}
+                                                dropdown={link.dropdown}
+                                            />
+                                        );
+                                    } else {
+                                        return (
+                                            <Link
+                                                to={link.path}
+                                                key={link.path}
+                                                className={`sidebarlink ${
+                                                    isActive && 'bg-blue-200 active'
+                                                } hover:bg-blue-200 duration-300`}
+                                            >
+                                                <i className={classNames('layout-menuitem-icon', link.icon)}></i>
+                                                <span className="layout-menuitem-text">
+                                                    {link.title}
+                                                </span>
+                                            </Link>
+                                        );
+                                    }
+                                })}
+                        </div>
+                    );
                 })}
-            </ul>
-        </MenuProvider>
+            </div>
     );
 };
 

@@ -1,6 +1,6 @@
 @tailwind base;
-/* @tailwind components;
-@tailwind utilities; */
+@tailwind components;
+/* @tailwind utilities; */
 
 @layer base{
     :root {
@@ -190,6 +190,41 @@
     }
 } 
 
+@layer components {
+    .custom-scrollbar {
+        @apply !scrollbar-thin !scrollbar-track-blue-200 !scrollbar-thumb-blue-500;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+        @apply !w-1;
+    }
+
+    .sidebarlink {
+        @apply flex items-center py-3 px-6 relative cursor-pointer;
+    }
+
+    .icon {
+        @apply text-2xl;
+    }
+
+    .sidebarlink.active::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 6px;
+        height: 100%;
+        background-color: #3b82f6;
+    }
+
+    .navlink {
+        @apply text-sm py-3 font-medium items-center flex px-6;
+    }
+
+    .sidebar-icon {
+        @apply mr-2 text-sm inline-block;
+    }
+}
 /* @layer tailwind-base, primereact, tailwind-utilities;
 
 @layer tailwind-base {

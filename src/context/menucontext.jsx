@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { useState, createContext, useContext } from 'react';
 
-export const MenuContext = createContext();
+const MenuContext = createContext();
 
-export const MenuProvider = ({ children }) => {
+const MenuProvider = ({ children }) => {
     const [activeMenu, setActiveMenu] = useState('');
 
     const value = {
@@ -18,6 +18,8 @@ MenuProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const useMenuContext = () => {
+const useMenuContext = () => {
   return useContext(MenuContext);
 };
+
+export { MenuContext, MenuProvider, useMenuContext };

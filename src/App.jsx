@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import RouteManager from "./setup"
 import Loader from "./components/Loader"
 import { PrimeReactProvider } from "primereact/api"
+import { MenuProvider } from "./context/menucontext"
 import { LayoutProvider } from "./context/layoutcontext"
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
@@ -13,9 +14,11 @@ function App() {
   return (
     <>
         <Suspense fallback={<Loader/>}>
-            <PrimeReactProvider value={{ unstyled: true, pt: {} }}>
+            <PrimeReactProvider>
                 <LayoutProvider>
+                  <MenuProvider>
                     <RouteManager />
+                  </MenuProvider>
                 </LayoutProvider>
             </PrimeReactProvider>
         </Suspense>
