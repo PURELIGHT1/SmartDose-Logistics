@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import { ROUTES } from '../helper/constanta/routes';
 import NotFound from '../pages/404';
 import PrivateRoutes from './PrivateRoutes';
+import Dashboard from '../pages/Dashboard/Dashboard';
+import Produk from '../pages/user/Produk';
 
 const RouteManager = () => {
     const { pathname } = useLocation();
@@ -11,7 +13,7 @@ const RouteManager = () => {
 
      useEffect(() => {
         if (pathname === '/') {
-            navigate(ROUTES.DASHBOARD);
+            navigate("/");
         }
     }, [pathname, navigate]);
 
@@ -20,10 +22,15 @@ const RouteManager = () => {
         <Routes>
             <>
              <Route element={<PrivateRoutes allowedRoles={['USER']} />}>
-                <Route path="/">
-
+                <Route path="/" element={<Dashboard />}>
+                    <Route path={ROUTES.PRODUK}>
+                        <Route index element={<Produk />} />
+                    </Route>
                 </Route>
              </Route>
+            </>
+            <>
+            {/* <Route path="/" element={<Dashboard />}/> */}
             </>
             
             <Route path={ROUTES.LOGIN} element={<Login />} />

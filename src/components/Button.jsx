@@ -8,7 +8,7 @@ const Button = ({ isloading, children, type = 'button', className, ...props }) =
             disabled={isloading}
             type={type}
             className={classNames(
-                `py-2 px-6 mr-2 text-sm font-medium text-white bg-blue-500 rounded-xl border border-gray-200 focus:z-10 inline-flex items-center disabled:cursor-not-allowed disabled:opacity-50`,
+                `bg-blue-500 border-gray-200 hover:bg-blue-800 text-white border-round transition-colors transition-duration-150 focus:z-10 inline-flex items-center disabled:cursor-not-allowed disabled:opacity-50`,
                 className
             )}
         >

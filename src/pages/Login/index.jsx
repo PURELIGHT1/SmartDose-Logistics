@@ -4,8 +4,10 @@ import useAuthStore from '../../setup/store/useAuthStore';
 import useLogin from './hook/useLogin';
 import { ROUTES } from '../../helper/constanta/routes';
 import { useEffect, useState } from 'react';
-import Button from '../../components/Button';
 import './style.css';
+import Swal from 'sweetalert2';
+import Button from '../../components/Button';
+
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -15,11 +17,26 @@ const Login = () => {
         formState: { errors },
     } = useForm();
     const user = useAuthStore((state) => state.user);
-
     const { mutate, isLoading } = useLogin();
 
     const onSubmit = (data) => {
-        mutate(data);
+        mutate(data,{
+            onSuccess: (res) => {
+                if(res.data.role === 'USER'){
+                    navigate(ROUTES.PRODUK);
+                }
+            },
+            onError: () => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: 'Gagal Login',
+                    timer: 1800,
+                    showConfirmButton: false,
+                });
+            }
+    
+        });
     };
 
     const redirectPath = location.state?.from || ROUTES.DASHBOARD;
@@ -36,7 +53,11 @@ const Login = () => {
 
     useEffect(() => {
         if (user) {
-            navigate(redirectPath);
+            if(user.role === 'USER'){
+                navigate(ROUTES.PRODUK);
+            }
+            console.log(user.role);
+            // navigate(redirectPath);
         }
     }, [user, navigate, redirectPath]);
 
@@ -56,7 +77,7 @@ const Login = () => {
                             />
                         </div>
                         {errors.phone && (
-                            <p className="text-red-800 text-sm">
+                            <p className="text-red-500 text-sm">
                                 Phone Number is required
                             </p>
                         )}
@@ -68,11 +89,15 @@ const Login = () => {
                             })} />
                         </div>
                         {errors.password && (
-                            <p className="text-red-800 text-sm">
+                            <p className="text-red-500 text-sm">
                                 Password is required
                             </p>
                         )}
-                        <Button type="submit" isloading={isLoading ? 1 : 0}>
+                        <Button 
+                            type="submit"
+                            className={`py-3 px-8 text-sm uppercase`}
+                            isloading={isLoading ? 1 : 0}
+                        >
                             Login
                         </Button>
                     </form>
@@ -90,7 +115,11 @@ const Login = () => {
                             <i className="fas fa-lock"></i>
                             <input type="password" placeholder="Password" />
                         </div>
-                        <Button type="submit" isloading={isLoading ? 1 : 0}>
+                        <Button 
+                            type="submit"
+                            className={`py-3 px-8 text-sm uppercase`}
+                            isloading={isLoading ? 1 : 0}
+                        >
                             Sign up
                         </Button>
                     </form>
