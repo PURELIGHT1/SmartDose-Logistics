@@ -1,21 +1,21 @@
+import { classNames } from 'primereact/utils';
 import PropTypes from 'prop-types';
-import { classNames } from '../helper/util/classNames';
 
 const Button = ({ isloading, children, type = 'button', className, ...props }) => {
-  return (
-     <button
+    return (
+        <button
             {...props}
             disabled={isloading}
             type={type}
             className={classNames(
-                `bg-blue-500 border-gray-200 hover:bg-blue-800 text-white border-round transition-colors transition-duration-150 focus:z-10 inline-flex items-center disabled:cursor-not-allowed disabled:opacity-50`,
+                `text-white rounded-full border-round border-gray-200 transition-colors transition-duration-150 focus:z-10 inline-flex items-center disabled:cursor-not-allowed disabled:opacity-50`,
                 className
             )}
         >
             {isloading === 1 && (
                 <svg
                     role="status"
-                    className="inline mr-2 w-4 h-4 text-gray-200 animate-spin"
+                    className="inline mr-2 text-gray-200 animate-spin"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ const Button = ({ isloading, children, type = 'button', className, ...props }) =
             )}
             {isloading ? 'Loading...' : children}
         </button>
-  );
+    );
 };
 
 Button.propTypes = {

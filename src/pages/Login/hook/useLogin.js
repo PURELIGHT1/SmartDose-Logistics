@@ -11,6 +11,7 @@ const useLogin = () => {
     return useMutation(api.login, {
         onSuccess: (data) => {
             if (data) {
+                // console.log(data.data.data);
                 const user = data.data.data.account;
                 Cookies.set('token', data.data.data.token);
                 setUser(user);

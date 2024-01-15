@@ -18,11 +18,11 @@ const DropdownLink = ({
         >
             <div className="flex w-full items-center">
                 <i className={classNames('layout-menuitem-icon', icon)}></i>
-                <span className="ml-2">{title}</span>
+                <span className="layout-menuitem-text">{title}</span>
             </div>
             <div>
                 <ul
-                    className={`mt-4 flex flex-col gap-y-4 w-full`}
+                    className='mt-4 flex flex-col gap-y-4 w-full'
                 >
                     {dropdown.map((item) => {
                         const isActive = pathname.includes(item.path);

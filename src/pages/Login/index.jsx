@@ -56,8 +56,6 @@ const Login = () => {
             if(user.role === 'USER'){
                 navigate(ROUTES.PRODUK);
             }
-            console.log(user.role);
-            // navigate(redirectPath);
         }
     }, [user, navigate, redirectPath]);
 
@@ -95,7 +93,7 @@ const Login = () => {
                         )}
                         <Button 
                             type="submit"
-                            className={`py-3 px-8 text-sm uppercase`}
+                            className={`bg-blue-500 hover:bg-blue-300 py-3 px-8 text-sm uppercase`}
                             isloading={isLoading ? 1 : 0}
                         >
                             Login
@@ -117,7 +115,7 @@ const Login = () => {
                         </div>
                         <Button 
                             type="submit"
-                            className={`py-3 px-8 text-sm uppercase`}
+                            className={`bg-blue-500 hover:bg-blue-300 py-3 px-8 text-sm uppercase`}
                             isloading={isLoading ? 1 : 0}
                         >
                             Sign up

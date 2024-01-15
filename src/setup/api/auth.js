@@ -2,9 +2,9 @@ import api from './axiosConfig';
 
 export const login = async (data) => {
     try {
-        const response = await api.post('/account/login', data, {
+        const response = await api().APILOGIN.post('/account/login', data, {
             headers: {
-                'Content-Type': 'application/json', 
+                'Content-Type': 'application/json',
             },
         });
         return response;

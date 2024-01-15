@@ -7,7 +7,6 @@ import { classNames } from 'primereact/utils';
 const AppMenu = () => {
     const { pathname } = useLocation();
     const user = useAuthStore((state) => state.user);
-    console.log(AppMenuitem);
     return (
         
             <div className="mt-4">

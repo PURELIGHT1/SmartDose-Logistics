@@ -2,7 +2,7 @@ import { ROUTES } from '../../helper/constanta/routes';
 
 export const AppMenuitem = [
     {
-        title: 'Main Menu',
+        title: 'Main',
         links: [
             {
                 title: 'Overview',
@@ -13,12 +13,18 @@ export const AppMenuitem = [
         ],
     },
     {
-        title: 'Data Master',
+        title: 'Master',
         links: [
             {
-                title: 'Produk',
+                title: 'Product',
                 path: ROUTES.PRODUK,
-                icon: 'pi pi-fw pi-id-card',
+                icon: 'pi pi-shopping-cart',
+                roles: ['USER', 'Manajer', 'Petugas'],
+            },
+            {
+                title: 'Tracking',
+                path: ROUTES.TRACK,
+                icon: 'pi pi-directions',
                 roles: ['USER', 'Manajer', 'Petugas'],
             },
         ],
