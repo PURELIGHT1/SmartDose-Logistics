@@ -39,8 +39,6 @@ const AppTopbar = forwardRef((props, ref) => {
         topbarmenubutton: topbarmenubuttonRef.current
     }));
 
-    // console.log(dataCartProduk);
-    // console.log(picklistSourceValue);
     const basicDialogFooter = <Button type="button" label="Pemesanan" onClick={() => {
         setDisplayBasic(false);
         navigate(ROUTES.ORDER, { state: { data: picklistTargetValue } });
