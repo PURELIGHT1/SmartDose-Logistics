@@ -1,5 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useMasterApi from "../../../setup/api/master";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../helper/constanta/routes";
 
 const queryKeys = {
     all: ['produk'],
@@ -10,6 +12,23 @@ const queryKeys = {
 
 export const useProduk = () => {
     return useQuery(queryKeys.all, useMasterApi().getProduk);
+};
+
+export const useAddProduk = () => {
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+
+     return useMutation(useMasterApi().addProduk, {
+        onSuccess: (data) => {
+            if (data) {
+                queryClient.invalidateQueries(queryKeys.all);
+            }
+        },
+        onError: (error) => {
+            navigate(ROUTES.PRODUK);
+            console.log(error);
+        },
+    });
 };
 
 export const useCartProduk = (id) => {

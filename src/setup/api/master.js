@@ -1,8 +1,10 @@
 import Swal from "sweetalert2";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAuthStore from "../store/useAuthStore";
 
 const useMasterApi = () => {
     const apiPrivate = useAxiosPrivate();
+    const user = useAuthStore((state) => state.user);
 
     const getGambar = async (gambar) => {
         try {
@@ -61,6 +63,23 @@ const useMasterApi = () => {
         }
     };
 
+    const addProduk = async (data) => {
+        console.log(data);
+        try {
+            const res = await apiPrivate.post('/cartproduk', {
+                produk: data.produk,
+                amount: data.amount,
+                account: user.id,
+            });
+            if (res.status === 200 || res.status === 201) {
+                return res.data;
+            }
+        } catch (error) {
+            Swal.fire("Gagal!", "Gagal Menambah Produk!", "error");
+            console.error("Error fetching products:", error);
+        }
+    };
+
     const getCartProduk = async ({queryKey}) => {
         const id = queryKey[1];
 
@@ -83,6 +102,8 @@ const useMasterApi = () => {
 
     return {
         getProduk,
+        addProduk,
+
         getCartProduk,
     };
 };

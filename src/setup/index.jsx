@@ -1,14 +1,16 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router';
 import Login from '../pages/Login';
-import { useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import { ROUTES } from '../helper/constanta/routes';
 import NotFound from '../pages/404';
 import PrivateRoutes from './PrivateRoutes';
 import Dashboard from '../pages/Dashboard/Dashboard';
-import Produk from '../pages/user/Produk';
+// import Produk from '../pages/user/Produk';
 import Track from '../pages/user/Track';
 import Order from '../pages/user/Order';
 import AccessDenied from '../pages/Access';
+
+const Produk = lazy(() => import('../pages/user/Produk'));
 
 const RouteManager = () => {
     const { pathname } = useLocation();
